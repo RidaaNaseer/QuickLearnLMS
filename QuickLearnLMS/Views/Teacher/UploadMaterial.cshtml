@@ -1,0 +1,41 @@
+﻿@model QuickLearnLMS.Models.Material
+@{
+    ViewBag.Title = "Upload Material";
+    var courses = ViewBag.Courses as List<QuickLearnLMS.Models.Course>;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-success text-white rounded-top-4">
+                    <h3 class="mb-0"><i class="bi bi-upload me-2"></i>Upload Lecture Material</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Course</strong></label>
+                            <select name="CourseID" class="form-select" required>
+                                <option value="">-- Select Course --</option>
+                                @foreach (var course in courses)
+                                {
+                                    <option value="@course.CourseID">@course.Title</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Select File (PDF/DOC only)</strong></label>
+                            <input type="file" name="uploadedFile" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i>Upload Material
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />

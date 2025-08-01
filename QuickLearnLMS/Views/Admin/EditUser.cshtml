@@ -1,0 +1,33 @@
+﻿@model QuickLearnLMS.Models.User
+
+<h2>Edit User</h2>
+
+<form method="post">
+    <input type="hidden" name="UserID" value="@Model.UserID" />
+
+    <div class="form-group">
+        <label>Name</label>
+        <input name="Name" value="@Model.Name" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input name="Email" value="@Model.Email" class="form-control" type="email" required />
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input name="Password" value="@Model.Password" class="form-control" type="password" required />
+    </div>
+
+    <div class="form-group">
+        <label>Role</label>
+        <select name="Role" class="form-control" required>
+            @Html.Raw($"<option value='Admin' {(Model.Role == "Admin" ? "selected" : "")}>Admin</option>")
+            @Html.Raw($"<option value='Teacher' {(Model.Role == "Teacher" ? "selected" : "")}>Teacher</option>")
+            @Html.Raw($"<option value='Student' {(Model.Role == "Student" ? "selected" : "")}>Student</option>")
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Save Changes</button>
+</form>

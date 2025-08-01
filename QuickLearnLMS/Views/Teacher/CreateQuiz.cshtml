@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Create Quiz";
+    var courses = ViewBag.Courses as List<QuickLearnLMS.Models.Course>;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <h3 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Create New Quiz</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="CreateQuizWithQuestions">
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Course</strong></label>
+                            <select name="CourseID" class="form-select" required>
+                                <option value="">-- Select Course --</option>
+                                @foreach (var course in courses)
+                                {
+                                    <option value="@course.CourseID">@course.Title</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Quiz Title</strong></label>
+                            <input type="text" name="Title" class="form-control" placeholder="Enter quiz title" required />
+                        </div>
+
+                        <div id="questions-container" class="mt-4"></div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="addQuestion()">
+                                <i class="bi bi-plus-circle me-1"></i>Add Question
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-1"></i>Create Quiz
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+@section Scripts {
+    <script>
+        let questionIndex = 0;
+
+        function addQuestion() {
+            const container = document.getElementById("questions-container");
+
+            let html = `
+            <div class="card border border-2 border-secondary rounded-3 p-3 mb-4 shadow-sm" id="question-${questionIndex}">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Question ${questionIndex + 1}</h5>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeQuestion(${questionIndex})">
+                        <i class="bi bi-trash3-fill"></i> Remove
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Question Text</label>
+                    <input name="Questions[${questionIndex}].Text" class="form-control" placeholder="Enter your question" required />
+                </div>
+                <label class="form-label">Options</label>`;
+
+            for (let i = 0; i < 4; i++) {
+                html += `
+                <div class="input-group mb-2">
+                    <span class="input-group-text">Option ${i + 1}</span>
+                    <input name="Questions[${questionIndex}].Options[${i}].Text" class="form-control" placeholder="Option text" required />
+                    <div class="input-group-text">
+                        <input type="radio" name="Questions[${questionIndex}].CorrectOptionIndex" value="${i}" />
+                        <span class="ms-1">Correct</span>
+                    </div>
+                </div>`;
+            }
+
+            html += `</div>`;
+            container.insertAdjacentHTML('beforeend', html);
+            questionIndex++;
+        }
+
+        function removeQuestion(index) {
+            const questionCard = document.getElementById(`question-${index}`);
+            if (questionCard) questionCard.remove();
+        }
+    </script>
+}

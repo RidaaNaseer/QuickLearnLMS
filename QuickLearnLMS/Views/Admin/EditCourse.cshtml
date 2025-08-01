@@ -1,0 +1,26 @@
+﻿@model QuickLearnLMS.Models.Course
+@{
+    var teachers = ViewBag.Teachers as List<QuickLearnLMS.Models.User>;
+}
+<h2>Edit Course</h2>
+<form method="post">
+    <input type="hidden" name="CourseID" value="@Model.CourseID" />
+    <div class="form-group">
+        <label>Title</label>
+        <input name="Title" value="@Model.Title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Assign Teacher</label>
+        <select name="TeacherID" class="form-control">
+            @foreach (var t in teachers)
+            {
+                var isSelected = Model.TeacherID == t.UserID ? "selected" : "";
+                @Html.Raw($"<option value='{t.UserID}' {isSelected}>{t.Name}</option>")
+            }
+        </select>
+
+
+
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Update Course</button>
+</form>

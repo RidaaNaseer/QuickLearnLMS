@@ -1,0 +1,43 @@
+﻿@model QuickLearnLMS.Models.Course
+@{
+    ViewBag.Title = "Add Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var teachers = ViewBag.Teachers as List<QuickLearnLMS.Models.User>;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-success text-white text-center rounded-top-4">
+                    <h4><i class="bi bi-journal-plus me-2"></i>Add New Course</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Course Title</label>
+                            <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter course title" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="TeacherID" class="form-label">Assign to Teacher</label>
+                            <select name="TeacherID" id="TeacherID" class="form-select" required>
+                                <option value="">-- Select Teacher --</option>
+                                @foreach (var teacher in teachers)
+                                {
+                                    <option value="@teacher.UserID">@teacher.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-plus-circle me-1"></i> Add Course
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

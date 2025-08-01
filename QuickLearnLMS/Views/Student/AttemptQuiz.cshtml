@@ -1,0 +1,40 @@
+﻿@model QuickLearnLMS.Models.Quiz
+
+@{
+    ViewBag.Title = "Attempt Quiz";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        <h3 class="mb-4 text-primary">@Model.Title</h3>
+
+        <form method="post">
+            <input type="hidden" name="quizId" value="@Model.QuizID" />
+
+            @foreach (var question in Model.Questions)
+            {
+                <div class="mb-4 border rounded p-3">
+                    <strong>@question.Text</strong>
+                    <div class="mt-2">
+                        @foreach (var option in question.Options)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="selectedOption_@question.QuestionID"
+                                       value="@option.OptionID"
+                                       id="option_@option.OptionID"
+                                       required />
+                                <label class="form-check-label" for="option_@option.OptionID">
+                                    @option.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <button type="submit" class="btn btn-success w-100">Submit Quiz</button>
+        </form>
+    </div>
+</div>

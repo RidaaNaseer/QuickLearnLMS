@@ -1,0 +1,44 @@
+﻿@model List<QuickLearnLMS.Models.Course>
+
+@{
+    ViewBag.Title = "My Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h3 class="mb-0"><i class="bi bi-book-half me-2"></i>My Courses</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Count == 0)
+            {
+                <div class="alert alert-info">You have not been assigned any courses yet.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course ID</th>
+                                <th>Course Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var course in Model)
+                            {
+                                <tr>
+                                    <td>@course.CourseID</td>
+                                    <td>@course.Title</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
